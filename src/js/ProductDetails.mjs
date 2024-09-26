@@ -26,6 +26,7 @@ function productDetailsTemplate(product) {
 
 
 export default class ProductDetails {
+
     constructor(productId, dataSource) {
         this.productId = productId;
         this.product = {};
@@ -35,7 +36,7 @@ export default class ProductDetails {
 
     async init() {
         this.product = await this.dataSource.findProductById(this.productId);
-        this.renderProductDetails();
+        this.renderProductDetails("main");
         document
             .getElementById("addToCart")
             .addEventListener("click", this.addToCart.bind(this));
@@ -46,8 +47,8 @@ export default class ProductDetails {
     }
 
     // Render product details HTML
-    renderProductDetails(selector) {
-        const element = document.querySelector(selector);
+    renderProductDetails() {
+        const element = document.querySelector("main");
         element.insertAdjacentHTML("afterBegin", productDetailsTemplate(this.product));
     }
 }
