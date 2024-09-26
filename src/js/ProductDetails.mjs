@@ -37,8 +37,8 @@ export default class ProductDetails {
         this.product = await this.dataSource.findProductById(this.productId);
         this.renderProductDetails();
         document
-            .getElementById('addToCart')
-            .addEventListener('click', this.addToCart.bind(this));
+            .getElementById("addToCart")
+            .addEventListener("click", this.addToCart.bind(this));
     }
 
     addToCart() {
