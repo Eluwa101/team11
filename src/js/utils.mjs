@@ -31,10 +31,45 @@ export function getParams(param) {
   return product;
 }
 
-export function renderListWithTemplate(templateFn, parentElement, products, position = "afterbegin", clear = false) {
-  if (clear){
-    parentElement.innerHTML = "";
+// export function renderListWithTemplate(templateFn, parentElement, products, position = "afterbegin", clear = false) {
+//   if (clear){
+//     parentElement.innerHTML = "";
+//   }
+//   const htmlStrings = products.map(templateFn);
+//   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+// }
+
+export function renderWithTemplate(template, parent, data, callback) {
+  parent.insertAdjacentHTML("afterbegin", template);
+  if (callback) {
+    callback(data);
   }
-  const htmlStrings = products.map(templateFn);
-  parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+}
+
+async function loadTemplate(path) {
+  const res = await fetch(path);
+  const template = await res.text();
+  return template;
+}
+
+export async function loadHeaderFooter() {
+  // Load the header and footer templates
+  const headerTemplate = await loadTemplate("../partials/header.html");
+  const footerTemplate = await loadTemplate("../partials/footer.html");
+
+  // Get the header and footer elements
+  const headerElement = document.querySelector("header");
+  const footerElement = document.querySelector("footer");
+
+  // Render the header and footer
+
+  renderWithTemplate(headerTemplate, headerElement);
+  renderWithTemplate(footerTemplate, footerElement);
+
+  // renderWithTemplate('header', headerElement, {}, () => {
+  //   console.log('Header rendered');
+  // });
+  // renderWithTemplate('footer', footerElement, {}, () => {
+  //   console.log('Footer rendered');
+  // });
 }
